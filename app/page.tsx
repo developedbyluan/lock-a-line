@@ -10,15 +10,21 @@ import { X } from "lucide-react";
 export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
+  const fileName = React.useRef<string | null>(null);
 
   React.useEffect(() => {
     if (audioFile) {
       toggleEditor();
+      fileName.current = audioFile.name;
     }
   }, [audioFile]);
 
   function toggleEditor() {
     setIsEditorVisible((prev) => !prev);
+  }
+
+  function formatFileName(fileName: string) {
+    return fileName.toLowerCase().split(".")[0].replaceAll(" ", "-");
   }
 
   return (
@@ -40,8 +46,11 @@ export default function HomePage() {
             </Button>
             <Button>Start Logging</Button>
           </div>
+          <p className="text-sm text-muted-foreground">
+            Audio to Text for {fileName.current}
+          </p>
           <Textarea
-            placeholder="Start writing subtitles..."
+            placeholder="Start writing transcription..."
             className="resize-none flex-grow p-4 text-lg"
           />
         </div>
