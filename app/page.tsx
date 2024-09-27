@@ -38,6 +38,7 @@ export default function HomePage() {
             <Button variant="ghost" size="icon" onClick={toggleEditor}>
               <X className="w-6 h-6" />
             </Button>
+            <Button>Start Logging</Button>
           </div>
           <Textarea
             placeholder="Start writing subtitles..."
