@@ -12,7 +12,7 @@ export default function TextEditor(props: {
   return (
     <div className="w-full h-full flex flex-col p-4">
       <div className="flex justify-between items-center mb-4">
-        <Button variant="ghost" size="icon" onClick={props.toggleEditor}>
+        <Button variant="ghost" size="icon" onClick={props.toggleEditor} aria-label="Close editor">
           <X className="w-6 h-6" />
         </Button>
       </div>
