@@ -20,9 +20,6 @@ export default function RootLayout({
           <h1>Lock a Line</h1>
         </header>
         <main>{children}</main>
-        <footer>
-          <h1>Footer</h1>
-        </footer>
       </body>
     </html>
   );
