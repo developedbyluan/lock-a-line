@@ -100,6 +100,9 @@ export default function HomePage() {
           isEditorVisible ? "translate-y-0" : "translate-y-full"
         )}
       >
+        <p className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-xs text-muted-foreground">
+          Transcription for {fileName.current || "Untitled"}
+        </p>
         <Button
           className="absolute top-4 right-4"
           onClick={() =>

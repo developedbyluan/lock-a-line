@@ -17,9 +17,6 @@ export default function TextEditor(props: {
           <X className="w-6 h-6" />
         </Button>
       </div>
-      <p className="text-sm text-muted-foreground">
-        Audio to Text for {props.fileName || "Untitled"}
-      </p>
       <Textarea
         placeholder="Start writing transcription..."
         className="resize-none flex-grow p-4 text-lg"
