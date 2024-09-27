@@ -59,6 +59,11 @@ export default function HomePage() {
     };
   }, [audioFile]);
 
+  React.useEffect(() => {
+    if (!fileName.current) return;  
+    saveText(`${formatFileName(fileName.current)}--src`, text);
+  }, [text]);
+
   function saveText(name: string, text: string) {
     if (!db) return;
     const transaction = db.transaction("texts", "readwrite");
@@ -100,9 +105,6 @@ export default function HomePage() {
           isEditorVisible ? "translate-y-0" : "translate-y-full"
         )}
       >
-        <p className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-xs text-muted-foreground">
-          Transcription for {fileName.current || "Untitled"}
-        </p>
         <Button
           className="absolute top-4 right-4"
           onClick={() =>
@@ -120,6 +122,9 @@ export default function HomePage() {
           fileName={formatFileName(fileName.current || "Untitled")}
           toggleEditor={toggleEditor}
         />
+        <p className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-xs text-muted-foreground">
+          Transcription for {fileName.current || "Untitled"}
+        </p>
       </div>
     </div>
   );
