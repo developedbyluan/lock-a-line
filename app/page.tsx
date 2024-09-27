@@ -111,7 +111,7 @@ export default function HomePage() {
 
   return (
     <div className="w-full">
-      {!isEditorVisible ? (
+      {!isEditorVisible && !isLogTimestampsVisible ? (
         <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
       ) : null}
       <div
