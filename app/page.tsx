@@ -37,7 +37,7 @@ export default function HomePage() {
           isEditorVisible ? "translate-y-0" : "translate-y-full"
         )}
       >
-        <TextEditor fileName={fileName.current} toggleEditor={toggleEditor} />
+        <TextEditor fileName={formatFileName(fileName.current || "Untitled")} toggleEditor={toggleEditor} />
       </div>
     </div>
 
