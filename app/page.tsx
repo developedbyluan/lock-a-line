@@ -55,6 +55,7 @@ export default function HomePage() {
       } else {
         console.log("No text found");
         console.log("Create New Text");
+        setText("");
       }
     };
   }, [audioFile]);
