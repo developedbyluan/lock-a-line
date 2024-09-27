@@ -23,7 +23,7 @@ export default function HomePage() {
       <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
       <div
         id="text-editor" 
-        className={cn("fixed bg-red-200 inset-0 opacity-50", isEditorVisible ? "translate-y-0" : "translate-y-full")}
+        className={cn("fixed bg-red-200 inset-0 opacity-50 transition-transform duration-300 ease-in-out", isEditorVisible ? "translate-y-0" : "translate-y-full")}
       >
         <div className="w-full h-full flex flex-col p-4">
 
