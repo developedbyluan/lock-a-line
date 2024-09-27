@@ -106,6 +106,7 @@ export default function HomePage() {
 
   function toggleLogTimestamps() {
     setIsLogTimestampsVisible(true);
+    setIsEditorVisible(false);
   }
 
   return (
