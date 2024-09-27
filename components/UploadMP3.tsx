@@ -21,7 +21,7 @@ export function UploadMP3({
     setMP3(file);
   }
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center gap-2">
       <input
         type="file"
         accept="audio/mp3"
