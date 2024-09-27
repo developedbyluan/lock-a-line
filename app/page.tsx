@@ -22,7 +22,9 @@ export default function HomePage() {
 
   return (
     <div className="w-full">
-      <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
+      {!isEditorVisible ? (
+        <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
+      ) : null}
       <div
         id="text-editor"
         className={cn(
