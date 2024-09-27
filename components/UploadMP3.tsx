@@ -1,4 +1,6 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { Upload } from "lucide-react";
 
 export function UploadMP3({
   setMP3,
@@ -26,9 +28,15 @@ export function UploadMP3({
         onChange={handleChange}
         ref={inputRef}
         className="hidden"
+        aria-label="Select MP3 File"
       />
-      <button onClick={() => inputRef.current?.click()}>Upload</button>
-      {mp3 ? <p>Uploaded: {mp3.name}</p> : <p>No file uploaded</p>}
+      <Button onClick={() => inputRef.current?.click()}>
+        <Upload className="mr-2 h-4 w-4" />
+        {mp3 ? "Change File" : "Select MP3"}
+      </Button>
+      {mp3 && (
+        <p className="text-sm text-neutral-600">Uploaded: {mp3.name}</p>
+      )}
     </div>
   );
 }
