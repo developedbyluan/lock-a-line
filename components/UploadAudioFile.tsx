@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export function UploadMP3({
-  setMP3,
-  mp3,
+export function UploadAudioFile({
+  setAudioFile,
+  audioFile,
 }: {
-  setMP3: React.Dispatch<React.SetStateAction<File | null>>;
-  mp3: File | null;
+  setAudioFile: React.Dispatch<React.SetStateAction<File | null>>;
+  audioFile: File | null;
 }) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -16,17 +16,17 @@ export function UploadMP3({
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.type !== "audio/mpeg") {
+    if (!file.type.includes("audio")) {
       toast({
         title: "Invalid file type",
-        description: "Please upload a valid MP3 file",
+        description: "Please upload a valid audio file",
         variant: "destructive",
       });
       return;
     }
-    setMP3(file);
+    setAudioFile(file);
     toast({
-      title: "MP3 File uploaded",
+      title: "Audio File uploaded",
       description: "Next step: generate subtitle",
     });
   }
@@ -34,17 +34,19 @@ export function UploadMP3({
     <div className="flex flex-col items-center justify-center gap-2">
       <input
         type="file"
-        accept="audio/mp3"
+        accept="audio/*"
         onChange={handleChange}
         ref={inputRef}
         className="hidden"
-        aria-label="Select MP3 File"
+        aria-label="Select Audio File"
       />
       <Button onClick={() => inputRef.current?.click()}>
         <Upload className="mr-2 h-4 w-4" />
-        {mp3 ? "Change File" : "Select MP3"}
+        {audioFile ? "Change Audio File" : "Select Audio File"}
       </Button>
-      {mp3 && <p className="text-sm text-neutral-600">Uploaded: {mp3.name}</p>}
+      {audioFile && (
+        <p className="text-sm text-neutral-600">Uploaded: {audioFile.name}</p>
+      )}
     </div>
   );
 }

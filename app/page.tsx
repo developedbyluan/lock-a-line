@@ -1,18 +1,18 @@
 "use client";
 
 import React from "react";
-import { UploadMP3 } from "@/components/UploadMP3";
+import { UploadAudioFile } from "@/components/UploadAudioFile";
 import { cn } from "@/lib/utils";
 
 export default function HomePage() {
-  const [mp3, setMP3] = React.useState<File | null>(null);
+  const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
 
   React.useEffect(() => {
-    if (mp3) {
+    if (audioFile) {
       toggleEditor();
     }
-  }, [mp3]);
+  }, [audioFile]);
 
   function toggleEditor() {
     setIsEditorVisible(prev => !prev);
@@ -20,7 +20,7 @@ export default function HomePage() {
 
   return (
     <div className="w-full">
-      <UploadMP3 setMP3={setMP3} mp3={mp3} />
+      <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
       <div
         id="text-editor" 
         className={cn("fixed bg-red-200 inset-0 opacity-50", isEditorVisible ? "translate-y-0" : "translate-y-full")}
