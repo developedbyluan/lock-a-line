@@ -11,6 +11,7 @@ let db: IDBDatabase | null = null;
 export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
+  const [text, setText] = React.useState("");
 
   const fileName = React.useRef<string | null>(null);
 
@@ -76,12 +77,14 @@ export default function HomePage() {
         <Button
           className="absolute top-4 right-4"
           onClick={() =>
-            startLogging(`${fileName.current}--src`, "Hello World")
+            startLogging(`${formatFileName(fileName.current || "Untitled")}--src`, text)
           }
         >
           Start Logging
         </Button>
         <TextEditor
+          text={text}
+          setText={setText}
           fileName={formatFileName(fileName.current || "Untitled")}
           toggleEditor={toggleEditor}
         />

@@ -7,6 +7,8 @@ import { X } from "lucide-react";
 export default function TextEditor(props: {
   fileName: string | null;
   toggleEditor: () => void;
+  text: string;
+  setText: (text: string) => void;
 }) {
   return (
     <div className="w-full h-full flex flex-col p-4">
@@ -21,6 +23,8 @@ export default function TextEditor(props: {
       <Textarea
         placeholder="Start writing transcription..."
         className="resize-none flex-grow p-4 text-lg"
+        value={props.text}
+        onChange={(e) => props.setText(e.target.value)}
       />
     </div>
   );
