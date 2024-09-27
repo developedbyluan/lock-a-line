@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button";
 
 let db: IDBDatabase | null = null;
 
+export function LogTimestamps() {
+  return <div>LogTimestamps</div>;
+}
+
 export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
@@ -126,6 +130,7 @@ export default function HomePage() {
           Transcription for {fileName.current || "Untitled"}
         </p>
       </div>
+      <LogTimestamps />
     </div>
   );
 }
