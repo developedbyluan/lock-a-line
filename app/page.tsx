@@ -4,6 +4,7 @@ import React from "react";
 import { UploadAudioFile } from "@/components/UploadAudioFile";
 import { cn } from "@/lib/utils";
 import TextEditor from "@/components/TextEditor";
+import { Button } from "@/components/ui/button";
 
 let db: IDBDatabase | null = null;
 
@@ -53,6 +54,13 @@ export default function HomePage() {
     return fileName.toLowerCase().split(".")[0].replaceAll(" ", "-");
   }
 
+  function startLogging(fileName: string, text: string) {
+    saveText(fileName, text);
+
+    setTimeout(() => {
+      console.log("router.push('/logging')");
+    }, 3000);
+  }
   return (
     <div className="w-full">
       {!isEditorVisible ? (
@@ -65,6 +73,14 @@ export default function HomePage() {
           isEditorVisible ? "translate-y-0" : "translate-y-full"
         )}
       >
+        <Button
+          className="absolute top-4 right-4"
+          onClick={() =>
+            startLogging(`${fileName.current}--src`, "Hello World")
+          }
+        >
+          Start Logging
+        </Button>
         <TextEditor
           fileName={formatFileName(fileName.current || "Untitled")}
           toggleEditor={toggleEditor}

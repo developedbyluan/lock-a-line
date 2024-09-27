@@ -14,7 +14,6 @@ export default function TextEditor(props: {
         <Button variant="ghost" size="icon" onClick={props.toggleEditor}>
           <X className="w-6 h-6" />
         </Button>
-        <Button>Start Logging</Button>
       </div>
       <p className="text-sm text-muted-foreground">
         Audio to Text for {props.fileName || "Untitled"}
