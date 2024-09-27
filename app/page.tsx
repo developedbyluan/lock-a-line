@@ -40,11 +40,30 @@ export default function HomePage() {
     };
   }, []);
 
+  React.useEffect(() => {
+    if (fileName.current) {
+      const text = loadText(`${formatFileName(fileName.current)}--src`);
+      if (!text) return;
+      text.onsuccess = () => {
+        if (text.result) {
+          setText(text.result.text);
+        }
+      };
+    }
+  }, [audioFile]);
+
   function saveText(name: string, text: string) {
     if (!db) return;
     const transaction = db.transaction("texts", "readwrite");
     const textsStore = transaction.objectStore("texts");
     textsStore.put({ name: name, text: text });
+  }
+
+  function loadText(name: string) {
+    if (!db) return;
+    const transaction = db.transaction("texts", "readonly");
+    const textsStore = transaction.objectStore("texts");
+    return textsStore.get(name);
   }
 
   function toggleEditor() {
