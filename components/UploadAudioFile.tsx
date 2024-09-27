@@ -27,7 +27,7 @@ export function UploadAudioFile({
     setAudioFile(file);
     toast({
       title: "Audio File uploaded",
-      description: "Next step: generate subtitle",
+      description: "Next step: Create and edit transcription",
     });
   }
   return (
