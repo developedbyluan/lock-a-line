@@ -1,4 +1,5 @@
 import "@/assets/styles/globals.css";
+import { Toaster } from "@/components/ui/toaster"
 
 import type { Metadata } from "next";
 
@@ -20,6 +21,7 @@ export default function RootLayout({
           <h1>Lock a Line</h1>
         </header>
         <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   );
