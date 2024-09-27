@@ -29,12 +29,12 @@ export default function HomePage() {
       <div
         id="text-editor"
         className={cn(
-          "fixed bg-red-200 inset-0 opacity-50 transition-transform duration-300 ease-in-out",
+          "fixed bg-background inset-0 transition-transform duration-300 ease-in-out",
           isEditorVisible ? "translate-y-0" : "translate-y-full"
         )}
       >
         <div className="w-full h-full flex flex-col p-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-4">
             <Button variant="ghost" size="icon" onClick={toggleEditor}>
               <X className="w-6 h-6" />
             </Button>
