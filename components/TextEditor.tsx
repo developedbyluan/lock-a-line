@@ -3,20 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { X } from "lucide-react";
 
-// let db: IDBDatabase | null = null;
 
 export default function TextEditor(props: {
   fileName: string | null;
   toggleEditor: () => void;
 }) {
-  React.useEffect(() => {
-    if (!props.fileName) return;
-    if (props.fileName === "untitled") return;
-
-    console.log(props.fileName);
-    // const request = indexedDB.open(`${props.fileName}--transcription`, 1);
-
-  }, [props.fileName]);
   return (
     <div className="w-full h-full flex flex-col p-4">
       <div className="flex justify-between items-center mb-4">

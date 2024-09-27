@@ -5,6 +5,8 @@ import { UploadAudioFile } from "@/components/UploadAudioFile";
 import { cn } from "@/lib/utils";
 import TextEditor from "@/components/TextEditor";
 
+let db: IDBDatabase | null = null;
+
 export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
@@ -16,6 +18,24 @@ export default function HomePage() {
       fileName.current = audioFile.name;
     }
   }, [audioFile]);
+
+  React.useEffect(() => {
+    const request = indexedDB.open("LogALineDB", 1);
+
+    request.onerror = (event) => {
+      console.error("IndexedDB error:", event);
+    };
+
+    request.onsuccess = (event) => {
+      db = (event.target as IDBOpenDBRequest).result;
+      console.log("IndexedDB opened successfully");
+    };
+
+    request.onupgradeneeded = (event) => {
+      db = (event.target as IDBOpenDBRequest).result;
+      db.createObjectStore("texts", { keyPath: "name" });
+    };
+  }, []);
 
   function toggleEditor() {
     setIsEditorVisible((prev) => !prev);
@@ -37,9 +57,11 @@ export default function HomePage() {
           isEditorVisible ? "translate-y-0" : "translate-y-full"
         )}
       >
-        <TextEditor fileName={formatFileName(fileName.current || "Untitled")} toggleEditor={toggleEditor} />
+        <TextEditor
+          fileName={formatFileName(fileName.current || "Untitled")}
+          toggleEditor={toggleEditor}
+        />
       </div>
     </div>
-
   );
 }
