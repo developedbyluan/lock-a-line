@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export function UploadMP3({
   setMP3,
@@ -10,15 +11,24 @@ export function UploadMP3({
   mp3: File | null;
 }) {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.type !== "audio/mpeg") {
-      alert("Please upload a valid MP3 file");
+      toast({
+        title: "Invalid file type",
+        description: "Please upload a valid MP3 file",
+        variant: "destructive",
+      });
       return;
     }
     setMP3(file);
+    toast({
+      title: "MP3 File uploaded",
+      description: "Next step: generate subtitle",
+    });
   }
   return (
     <div className="flex flex-col items-center justify-center gap-2">
@@ -34,9 +44,7 @@ export function UploadMP3({
         <Upload className="mr-2 h-4 w-4" />
         {mp3 ? "Change File" : "Select MP3"}
       </Button>
-      {mp3 && (
-        <p className="text-sm text-neutral-600">Uploaded: {mp3.name}</p>
-      )}
+      {mp3 && <p className="text-sm text-neutral-600">Uploaded: {mp3.name}</p>}
     </div>
   );
 }
