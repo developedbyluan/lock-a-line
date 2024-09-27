@@ -16,7 +16,8 @@ export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
   const [text, setText] = React.useState("");
-  const [isLogTimestampsVisible, setIsLogTimestampsVisible] = React.useState(false);
+  const [isLogTimestampsVisible, setIsLogTimestampsVisible] =
+    React.useState(false);
 
   const fileName = React.useRef<string | null>(null);
 
@@ -115,18 +116,15 @@ export default function HomePage() {
           isEditorVisible ? "translate-y-0" : "translate-y-full"
         )}
       >
-        <Button
-          className="absolute top-4 right-4"
-          onClick={() => formatText()}
-          disabled={!text}
-        >
-          Format Text
-        </Button>
-        <TextEditor
-          text={text}
-          setText={setText}
-          toggleEditor={toggleEditor}
-        />
+        <div className="absolute top-4 right-4 flex gap-4">
+          <Button onClick={() => formatText()} disabled={!text} variant="secondary">
+            Format Text
+          </Button>
+          <Button>
+            Log Timestamps
+          </Button>
+        </div>
+        <TextEditor text={text} setText={setText} toggleEditor={toggleEditor} />
         <p className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-xs text-muted-foreground">
           Transcription for {fileName.current || "Untitled"}
         </p>
