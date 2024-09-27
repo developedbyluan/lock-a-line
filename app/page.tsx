@@ -10,6 +10,7 @@ let db: IDBDatabase | null = null;
 export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
+
   const fileName = React.useRef<string | null>(null);
 
   React.useEffect(() => {
@@ -36,6 +37,13 @@ export default function HomePage() {
       db.createObjectStore("texts", { keyPath: "name" });
     };
   }, []);
+
+  function saveText(name: string, text: string) {
+    if (!db) return;
+    const transaction = db.transaction("texts", "readwrite");
+    const textsStore = transaction.objectStore("texts");
+    textsStore.put({ name: name, text: text });
+  }
 
   function toggleEditor() {
     setIsEditorVisible((prev) => !prev);
