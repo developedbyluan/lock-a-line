@@ -104,6 +104,10 @@ export default function HomePage() {
     setText(formattedLines.join("\n\n"));
   }
 
+  function toggleLogTimestamps() {
+    setIsLogTimestampsVisible(true);
+  }
+
   return (
     <div className="w-full">
       {!isEditorVisible ? (
@@ -120,7 +124,7 @@ export default function HomePage() {
           <Button onClick={() => formatText()} disabled={!text} variant="secondary">
             Format Text
           </Button>
-          <Button>
+          <Button onClick={toggleLogTimestamps}>
             Log Timestamps
           </Button>
         </div>
