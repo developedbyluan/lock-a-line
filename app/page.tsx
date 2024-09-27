@@ -60,7 +60,7 @@ export default function HomePage() {
   }, [audioFile]);
 
   React.useEffect(() => {
-    if (!fileName.current) return;  
+    if (!fileName.current) return;
     saveText(`${formatFileName(fileName.current)}--src`, text);
   }, [text]);
 
@@ -86,13 +86,17 @@ export default function HomePage() {
     return fileName.toLowerCase().split(".")[0].replaceAll(" ", "-");
   }
 
-  function startLogging(fileName: string, text: string) {
-    saveText(fileName, text);
-
-    setTimeout(() => {
-      console.log("router.push('/logging')");
-    }, 3000);
+  function formatText() {
+    const lines = text.split("\n");
+    const formattedLines = lines.reduce((acc: string[], line: string) => {
+      if (line.trim() === "") {
+        return [...acc];
+      }
+      return [...acc, line];
+    }, []);
+    setText(formattedLines.join("\n\n"));
   }
+
   return (
     <div className="w-full">
       {!isEditorVisible ? (
@@ -107,14 +111,10 @@ export default function HomePage() {
       >
         <Button
           className="absolute top-4 right-4"
-          onClick={() =>
-            startLogging(
-              `${formatFileName(fileName.current || "Untitled")}--src`,
-              text
-            )
-          }
+          onClick={() => formatText()}
+          disabled={!text}
         >
-          Start Logging
+          Format Text
         </Button>
         <TextEditor
           text={text}
