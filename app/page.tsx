@@ -41,15 +41,22 @@ export default function HomePage() {
   }, []);
 
   React.useEffect(() => {
-    if (fileName.current) {
-      const text = loadText(`${formatFileName(fileName.current)}--src`);
-      if (!text) return;
-      text.onsuccess = () => {
-        if (text.result) {
-          setText(text.result.text);
-        }
-      };
-    }
+    if (!fileName.current) return;
+    const request = loadText(`${formatFileName(fileName.current)}--src`);
+    if (!request) return;
+
+    request.onerror = () => {
+      console.error("IndexedDB error:", request.error);
+    };
+
+    request.onsuccess = () => {
+      if (request.result) {
+        setText(request.result.text);
+      } else {
+        console.log("No text found");
+        console.log("Create New Text");
+      }
+    };
   }, [audioFile]);
 
   function saveText(name: string, text: string) {
@@ -96,7 +103,10 @@ export default function HomePage() {
         <Button
           className="absolute top-4 right-4"
           onClick={() =>
-            startLogging(`${formatFileName(fileName.current || "Untitled")}--src`, text)
+            startLogging(
+              `${formatFileName(fileName.current || "Untitled")}--src`,
+              text
+            )
           }
         >
           Start Logging
