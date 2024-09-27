@@ -4,6 +4,7 @@ import React from "react";
 import { UploadAudioFile } from "@/components/UploadAudioFile";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { X } from "lucide-react";
 
 export default function HomePage() {
@@ -38,6 +39,10 @@ export default function HomePage() {
               <X className="w-6 h-6" />
             </Button>
           </div>
+          <Textarea
+            placeholder="Start writing subtitles..."
+            className="resize-none flex-grow p-4 text-lg"
+          />
         </div>
       </div>
     </div>
