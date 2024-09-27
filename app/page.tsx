@@ -120,7 +120,6 @@ export default function HomePage() {
         <TextEditor
           text={text}
           setText={setText}
-          fileName={formatFileName(fileName.current || "Untitled")}
           toggleEditor={toggleEditor}
         />
         <p className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-xs text-muted-foreground">

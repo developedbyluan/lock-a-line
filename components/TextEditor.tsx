@@ -5,7 +5,6 @@ import { X } from "lucide-react";
 
 
 export default function TextEditor(props: {
-  fileName: string | null;
   toggleEditor: () => void;
   text: string;
   setText: (text: string) => void;
