@@ -106,9 +106,8 @@ export default function HomePage() {
     console.log(textToArray(text));
   }
 
-  function textToArray(text: string) {
-    const lines = text.split("\n\n");
-    const lineObjectsArray = lines.map((line) => {
+  function arrayToObjectsArray(array: string[]) {
+    const lineObjectsArray = array.map((line) => {
       const parts = line.split("---");
 
       if (parts.length !== 5) {
