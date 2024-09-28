@@ -5,6 +5,7 @@ import { UploadAudioFile } from "@/components/UploadAudioFile";
 import { cn } from "@/lib/utils";
 import TextEditor from "@/components/TextEditor";
 import { Button } from "@/components/ui/button";
+import Transcript from "@/components/Transcript";
 
 let db: IDBDatabase | null = null;
 
@@ -165,6 +166,7 @@ export default function HomePage() {
         <Button>Placeholder</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
+      <Transcript />
     </div>
   );
 }
