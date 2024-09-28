@@ -7,6 +7,16 @@ import TextEditor from "@/components/TextEditor";
 import { Button } from "@/components/ui/button";
 import Transcript from "@/components/Transcript";
 
+export type Transcript = {
+  text: string;
+  ipa: string;
+  translation: string;
+  imgUrl: string;
+  altText: string;
+  imgCredit: string;
+  type: string;
+};
+
 let db: IDBDatabase | null = null;
 
 
@@ -105,7 +115,7 @@ export default function HomePage() {
     setIsEditorVisible(false);
   }
 
-  function textToTranscriptArray(text: string) {
+  function textToTranscriptArray(text: string): Transcript[] | Partial<Transcript>[] {
     const lineObjectsArray = text.split("\n\n").map((line) => {
       const parts = line.split("---");
 
