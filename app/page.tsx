@@ -8,19 +8,11 @@ import { Button } from "@/components/ui/button";
 
 let db: IDBDatabase | null = null;
 
-export function LogTimestamps() {
-  return (
-    <div>
-      <h2>LogTimestamps</h2>
-    </div>
-  );
-}
 
 export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
   const [text, setText] = React.useState("");
-  const [isLogTimestampsVisible, setIsLogTimestampsVisible] =
     React.useState(false);
 
   const fileName = React.useRef<string | null>(null);
@@ -109,7 +101,6 @@ export default function HomePage() {
   }
 
   function toggleLogTimestamps() {
-    setIsLogTimestampsVisible(true);
     setIsEditorVisible(false);
     console.log(textToArray(text));
   }
@@ -141,12 +132,11 @@ export default function HomePage() {
 
   function editTranscript() {
     setIsEditorVisible(true);
-    setIsLogTimestampsVisible(false);
   }
 
   return (
     <div className="w-full">
-      {!isEditorVisible && !isLogTimestampsVisible ? (
+      {!isEditorVisible ? (
         <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
       ) : null}
       <div
@@ -175,7 +165,6 @@ export default function HomePage() {
         <Button>Placeholder</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
-      {isLogTimestampsVisible ? <LogTimestamps /> : null}
     </div>
   );
 }
