@@ -111,6 +111,32 @@ export default function HomePage() {
   function toggleLogTimestamps() {
     setIsLogTimestampsVisible(true);
     setIsEditorVisible(false);
+    console.log(textToArray(text));
+  }
+
+  function textToArray(text: string) {
+    const lines = text.split("\n\n");
+    const lineObjectsArray = lines.map((line) => {
+      const parts = line.split("---");
+
+      if (parts.length !== 5) {
+        const [text] = parts;
+        return {text};
+      }
+
+      const [text, ipa, translation, imgUrlandAlt, type ] = parts;
+      const [imgUrl, alt] = imgUrlandAlt.split("|");
+      return {
+        text,
+        ipa,
+        translation,
+        imgUrl,
+        alt,
+        type,
+      };
+    });
+
+    return lineObjectsArray;
   }
 
   function editTranscript() {
