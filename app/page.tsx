@@ -113,6 +113,11 @@ export default function HomePage() {
     setIsEditorVisible(false);
   }
 
+  function editTranscript() {
+    setIsEditorVisible(true);
+    setIsLogTimestampsVisible(false);
+  }
+
   return (
     <div className="w-full">
       {!isEditorVisible && !isLogTimestampsVisible ? (
@@ -140,9 +145,9 @@ export default function HomePage() {
           Transcription for {fileName.current || "Untitled"}
         </p>
       </div>
-      <div className="absolute bg-red-200/50 h-1/2 top-1/2 -translate-y-1/2 p-4 right-4 flex flex-col justify-between">
+      <div className="fixed bg-red-200/50 h-1/2 top-1/2 -translate-y-1/2 p-4 right-4 flex flex-col justify-between">
         <Button>Placeholder</Button>
-        <Button>Placeholder</Button>
+        <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
       {isLogTimestampsVisible ? <LogTimestamps /> : null}
     </div>
