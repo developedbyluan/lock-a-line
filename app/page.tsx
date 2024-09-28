@@ -103,7 +103,6 @@ export default function HomePage() {
 
   function toggleLogTimestamps() {
     setIsEditorVisible(false);
-    console.log(textToArray(text));
   }
 
   function arrayToObjectsArray(array: string[]) {
@@ -165,7 +164,7 @@ export default function HomePage() {
         <Button>Placeholder</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
-      <Transcript />
+      <Transcript text={text} />
     </div>
   );
 }
