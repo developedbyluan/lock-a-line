@@ -126,7 +126,7 @@ export default function HomePage() {
       <div
         id="text-editor"
         className={cn(
-          "fixed bg-background inset-0 transition-transform duration-300 ease-in-out",
+          "fixed bg-background inset-0 transition-transform duration-300 ease-in-out z-50",
           isEditorVisible ? "translate-y-0" : "translate-y-full"
         )}
       >
