@@ -14,7 +14,7 @@ export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
   const [text, setText] = React.useState("");
-    React.useState(false);
+  const [transcriptArray, setTranscriptArray] = React.useState([]);
 
   const fileName = React.useRef<string | null>(null);
 
