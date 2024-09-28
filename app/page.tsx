@@ -9,7 +9,11 @@ import { Button } from "@/components/ui/button";
 let db: IDBDatabase | null = null;
 
 export function LogTimestamps() {
-  return <div>LogTimestamps</div>;
+  return (
+    <div>
+      <h2>LogTimestamps</h2>
+    </div>
+  );
 }
 
 export default function HomePage() {
@@ -122,17 +126,23 @@ export default function HomePage() {
         )}
       >
         <div className="absolute top-4 right-4 flex gap-4">
-          <Button onClick={() => formatText()} disabled={!text} variant="secondary">
+          <Button
+            onClick={() => formatText()}
+            disabled={!text}
+            variant="secondary"
+          >
             Format Text
           </Button>
-          <Button onClick={toggleLogTimestamps}>
-            Log Timestamps
-          </Button>
+          <Button onClick={toggleLogTimestamps}>Log Timestamps</Button>
         </div>
         <TextEditor text={text} setText={setText} toggleEditor={toggleEditor} />
         <p className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-xs text-muted-foreground">
           Transcription for {fileName.current || "Untitled"}
         </p>
+      </div>
+      <div className="absolute bg-red-200/50 h-1/2 top-1/2 -translate-y-1/2 p-4 right-4 flex flex-col justify-between">
+        <Button>Placeholder</Button>
+        <Button>Placeholder</Button>
       </div>
       {isLogTimestampsVisible ? <LogTimestamps /> : null}
     </div>
