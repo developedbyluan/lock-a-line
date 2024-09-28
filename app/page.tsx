@@ -105,8 +105,8 @@ export default function HomePage() {
     setIsEditorVisible(false);
   }
 
-  function arrayToObjectsArray(array: string[]) {
-    const lineObjectsArray = array.map((line) => {
+  function textToTranscriptArray(text: string) {
+    const lineObjectsArray = text.split("\n\n").map((line) => {
       const parts = line.split("---");
 
       if (parts.length !== 5) {
