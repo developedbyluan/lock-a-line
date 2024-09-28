@@ -7,15 +7,6 @@ import TextEditor from "@/components/TextEditor";
 import { Button } from "@/components/ui/button";
 import Transcript from "@/components/Transcript";
 
-export type Transcript = {
-  text: string;
-  ipa: string;
-  translation: string;
-  imgUrl: string;
-  altText: string;
-  imgCredit: string;
-  type: string;
-};
 
 let db: IDBDatabase | null = null;
 
