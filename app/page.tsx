@@ -15,7 +15,6 @@ export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
   const [text, setText] = React.useState("");
-  const [transcriptArray, setTranscriptArray] = React.useState([]);
 
   const fileName = React.useRef<string | null>(null);
 
@@ -166,7 +165,7 @@ export default function HomePage() {
         <Button>Placeholder</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
-      <Transcript text={text} />
+      <Transcript transcriptArray={textToTranscriptArray(text)} />
     </div>
   );
 }
