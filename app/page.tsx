@@ -111,18 +111,18 @@ export default function HomePage() {
 
       if (parts.length !== 5) {
         const [text] = parts;
-        return {text};
+        return {text: text.trim()};
       }
 
       const [text, ipa, translation, imgUrlandAlt, type ] = parts;
       const [imgUrl, alt] = imgUrlandAlt.split("|");
       return {
-        text,
-        ipa,
-        translation,
-        imgUrl,
-        alt,
-        type,
+        text: text.trim(),
+        ipa: ipa.trim(),
+        translation: translation.trim(),
+        imgUrl: imgUrl.trim(),
+        alt: alt.trim(),
+        type: type.trim(),
       };
     });
 
