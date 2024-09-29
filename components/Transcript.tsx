@@ -10,7 +10,10 @@ export default function Transcript(props: {
 
     if (Object.keys(line).length !== 7) {
       return (
-        <p key={crypto.randomUUID()}>{line.text}</p>
+        <div key={crypto.randomUUID()}>
+          <p>{line.text}</p>
+          {index === 0 && line.text !== "" ? <Button>Log</Button> : null}
+        </div>
       );
     }
     return (
@@ -36,7 +39,7 @@ export default function Transcript(props: {
           <p className="inline-block bg-neutral-200 px-2 py-1 rounded-md text-xs text-neutral-800">
             {line.type}
           </p>
-          {index === 0 ? <Button>Log Timestamp</Button> : null}
+          {index === 0 ? <Button>Log</Button> : null}
         </div>
       </div>
     );
