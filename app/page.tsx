@@ -22,7 +22,7 @@ export default function HomePage() {
   >([]);
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const [isAudioPlaying, setIsAudioPlaying] = React.useState(false);
-
+  const audioRef = React.useRef<HTMLAudioElement>(null);
   const fileName = React.useRef<string | null>(null);
 
   //TODO: Load audio file => Create new text in local storage if no local text is found
@@ -141,6 +141,8 @@ export default function HomePage() {
   }
 
   function addToSubtitles() {
+    playPauseAudio();
+    if (!isAudioPlaying) return;
     setTranscriptArray((prev) =>
       prev.filter((line, index) => index !== 0 && line.text !== "")
     );
@@ -155,6 +157,16 @@ export default function HomePage() {
       subtitlesArray[subtitlesArray.length - 1],
       ...prev,
     ]);
+  }
+
+  function playPauseAudio() {
+    if (!audioRef.current) return;
+    if (audioRef.current.paused) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+    setIsAudioPlaying((prev) => !prev);
   }
 
   return (
@@ -194,6 +206,7 @@ export default function HomePage() {
           removeFromSubtitles={removeFromSubtitles}
         />
         <AudioPlayer
+          ref={audioRef}
           audioUrl={audioUrl}
           isAudioPlaying={isAudioPlaying}
           setIsAudioPlaying={setIsAudioPlaying}
@@ -201,6 +214,7 @@ export default function HomePage() {
         <Transcript
           transcriptArray={transcriptArray}
           addToSubtitles={addToSubtitles}
+          isAudioPlaying={isAudioPlaying}
         />
       </div>
     </div>
