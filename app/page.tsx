@@ -112,6 +112,11 @@ export default function HomePage() {
     setSubtitlesArray((prev) => [...prev, transcriptArray[0]]);
   }
 
+  function removeFromSubtitles() {
+    setSubtitlesArray((prev) => prev.filter((line, index) => index !== prev.length - 1));
+    setTranscriptArray((prev) => [subtitlesArray[subtitlesArray.length - 1], ...prev]);
+  }
+
   return (
     <div className="w-full">
       {!isEditorVisible ? (
@@ -144,7 +149,10 @@ export default function HomePage() {
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
       <div className="flex flex-col gap-10">
-        <Subtitles subtitlesArray={subtitlesArray} />
+        <Subtitles
+          subtitlesArray={subtitlesArray}
+          removeFromSubtitles={removeFromSubtitles}
+         />
         <Transcript
           transcriptArray={transcriptArray}
           addToSubtitles={addToSubtitles}
