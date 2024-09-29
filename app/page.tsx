@@ -8,9 +8,6 @@ import { Button } from "@/components/ui/button";
 import Transcript from "@/components/Transcript";
 import { type Transcript as TranscriptType } from "@/types/Transcript";
 
-let db: IDBDatabase | null = null;
-
-
 export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
@@ -25,46 +22,6 @@ export default function HomePage() {
     }
   }, [audioFile]);
 
-  //TODO: Remove this
-  React.useEffect(() => {
-    const request = indexedDB.open("LogALineDB", 1);
-
-    request.onerror = (event) => {
-      console.error("IndexedDB error:", event);
-    };
-
-    request.onsuccess = (event) => {
-      db = (event.target as IDBOpenDBRequest).result;
-      console.log("IndexedDB opened successfully");
-    };
-
-    request.onupgradeneeded = (event) => {
-      db = (event.target as IDBOpenDBRequest).result;
-      db.createObjectStore("texts", { keyPath: "name" });
-    };
-  }, []);
-
-  //TODO: Remove this/
-  React.useEffect(() => {
-    if (!fileName.current) return;
-    const request = loadText(`${formatFileName(fileName.current)}--src`);
-    if (!request) return;
-
-    request.onerror = () => {
-      console.error("IndexedDB error:", request.error);
-    };
-
-    request.onsuccess = () => {
-      if (request.result) {
-        setText(request.result.text);
-      } else {
-        console.log("No text found");
-        console.log("Create New Text");
-        setText("");
-      }
-    };
-  }, [audioFile]);
-
   //TODO: Load audio file => Create new text in local storage if no local text is found
   // otherwise, load the local text to the editor (setText)
   React.useEffect(() => {
@@ -72,7 +29,7 @@ export default function HomePage() {
     const localText = localStorage.getItem((`${formatFileName(fileName.current)}--src`))
     if (!localText) {
       console.log("No local text found");
-      localStorage.setItem(`${formatFileName(fileName.current)}--src`, "");
+      localStorage.setItem(`${formatFileName(fileName.current)}--src`, "1");
       return;
     };
     setText(localText);
@@ -83,20 +40,6 @@ export default function HomePage() {
     if (!fileName.current) return;
     localStorage.setItem(`${formatFileName(fileName.current)}--src`, text);
   }, [text]);
-
-  function saveText(name: string, text: string) {
-    if (!db) return;
-    const transaction = db.transaction("texts", "readwrite");
-    const textsStore = transaction.objectStore("texts");
-    textsStore.put({ name: name, text: text });
-  }
-
-  function loadText(name: string) {
-    if (!db) return;
-    const transaction = db.transaction("texts", "readonly");
-    const textsStore = transaction.objectStore("texts");
-    return textsStore.get(name);
-  }
 
   function toggleEditor() {
     setIsEditorVisible((prev) => !prev);
