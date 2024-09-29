@@ -45,5 +45,5 @@ export default function Transcript(props: {
       </div>
     );
   });
-  return <div className="flex flex-col gap-7">{lineElements}</div>;
+  return <div className="flex flex-col gap-7 p-4">{lineElements}</div>;
 }

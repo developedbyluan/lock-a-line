@@ -40,5 +40,5 @@ export default function Subtitles(props: { subtitlesArray: TranscriptType[] | Pa
       </div>
     );
   });
-  return <div className="flex flex-col gap-7 bg-blue-200/50 p-4">{subtitlesElements}</div>;
+  return <div className="flex flex-col gap-7 bg-neutral-50 p-4">{subtitlesElements}</div>;
 }

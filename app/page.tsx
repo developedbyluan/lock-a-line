@@ -103,6 +103,9 @@ export default function HomePage() {
 
   function editTranscript() {
     setIsEditorVisible(true);
+
+    const joinedTranscriptArrayValues = transcriptArray.map(line => Object.values(line).join(' --- '))
+    setText(joinedTranscriptArrayValues.join('\n\n'))
   }
 
   function addToSubtitles() {
