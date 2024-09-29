@@ -96,6 +96,7 @@ export default function HomePage() {
   }
 
   function addToSubtitles() {
+    setTranscriptArray((prev) => prev.filter((line, index) => index !== 0 && line.text !== ""));
   }
 
   return (
@@ -129,7 +130,7 @@ export default function HomePage() {
         <Button>Placeholder</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
-      <Transcript transcriptArray={transcriptArray} />
+      <Transcript transcriptArray={transcriptArray} addToSubtitles={addToSubtitles} />
     </div>
   );
 }

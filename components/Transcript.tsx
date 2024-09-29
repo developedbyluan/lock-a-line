@@ -5,6 +5,7 @@ import { type Transcript as TranscriptType } from "@/types/Transcript";
 
 export default function Transcript(props: {
   transcriptArray: TranscriptType[] | Partial<TranscriptType>[];
+  addToSubtitles: () => void;
 }) {
   const lineElements = props.transcriptArray.map((line, index) => {
 
@@ -12,7 +13,7 @@ export default function Transcript(props: {
       return (
         <div key={crypto.randomUUID()}>
           <p>{line.text}</p>
-          {index === 0 && line.text !== "" ? <Button>Log</Button> : null}
+          {index === 0 && line.text !== "" ? <Button onClick={() => props.addToSubtitles()}>Log</Button> : null}
         </div>
       );
     }
@@ -39,7 +40,7 @@ export default function Transcript(props: {
           <p className="inline-block bg-neutral-200 px-2 py-1 rounded-md text-xs text-neutral-800">
             {line.type}
           </p>
-          {index === 0 ? <Button>Log</Button> : null}
+          {index === 0 ? <Button onClick={() => props.addToSubtitles()}>Log</Button> : null}
         </div>
       </div>
     );
