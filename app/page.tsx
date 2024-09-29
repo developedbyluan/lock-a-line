@@ -21,6 +21,8 @@ export default function HomePage() {
     TranscriptType[] | Partial<TranscriptType>[]
   >([]);
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
+  const [isAudioPlaying, setIsAudioPlaying] = React.useState(false);
+
   const fileName = React.useRef<string | null>(null);
 
   //TODO: Load audio file => Create new text in local storage if no local text is found
@@ -191,7 +193,11 @@ export default function HomePage() {
           subtitlesArray={subtitlesArray}
           removeFromSubtitles={removeFromSubtitles}
         />
-        <AudioPlayer audioUrl={audioUrl} />
+        <AudioPlayer
+          audioUrl={audioUrl}
+          isAudioPlaying={isAudioPlaying}
+          setIsAudioPlaying={setIsAudioPlaying}
+        />
         <Transcript
           transcriptArray={transcriptArray}
           addToSubtitles={addToSubtitles}
