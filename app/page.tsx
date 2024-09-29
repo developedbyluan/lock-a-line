@@ -45,6 +45,11 @@ export default function HomePage() {
     localStorage.setItem(`${formatFileName(fileName.current)}--src`, text);
   }, [text]);
 
+  React.useEffect(() => {
+    if (!fileName.current) return;
+    localStorage.setItem(`${formatFileName(fileName.current)}--subtitles`, JSON.stringify(subtitlesArray));
+  }, [subtitlesArray]);
+
 
   React.useEffect(() => {
     if (!audioFile) return;
@@ -62,6 +67,7 @@ export default function HomePage() {
       URL.revokeObjectURL(audioUrl);
     }
   }, [audioUrl]);
+
   function toggleEditor() {
     setIsEditorVisible((prev) => !prev);
   }
@@ -82,8 +88,10 @@ export default function HomePage() {
   }
 
   function toggleLogTimestamps() {
+    if (!fileName.current) return;
     setTranscriptArray(textToTranscriptArray(text));
     setIsEditorVisible(false);
+    setSubtitlesArray(JSON.parse(localStorage.getItem(`${formatFileName(fileName.current)}--subtitles`) || "[]"));
   }
 
   function textToTranscriptArray(
