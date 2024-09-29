@@ -25,6 +25,7 @@ export default function HomePage() {
     }
   }, [audioFile]);
 
+  //TODO: Remove this
   React.useEffect(() => {
     const request = indexedDB.open("LogALineDB", 1);
 
@@ -43,6 +44,7 @@ export default function HomePage() {
     };
   }, []);
 
+  //TODO: Remove this/
   React.useEffect(() => {
     if (!fileName.current) return;
     const request = loadText(`${formatFileName(fileName.current)}--src`);
@@ -63,9 +65,23 @@ export default function HomePage() {
     };
   }, [audioFile]);
 
+  //TODO: Load audio file => Create new text in local storage if no local text is found
+  // otherwise, load the local text to the editor (setText)
   React.useEffect(() => {
     if (!fileName.current) return;
-    saveText(`${formatFileName(fileName.current)}--src`, text);
+    const localText = localStorage.getItem((`${formatFileName(fileName.current)}--src`))
+    if (!localText) {
+      console.log("No local text found");
+      localStorage.setItem(`${formatFileName(fileName.current)}--src`, "");
+      return;
+    };
+    setText(localText);
+  }, [audioFile])
+
+  //TODO: Save text to local storage every time (the state) text changes
+  React.useEffect(() => {
+    if (!fileName.current) return;
+    localStorage.setItem(`${formatFileName(fileName.current)}--src`, text);
   }, [text]);
 
   function saveText(name: string, text: string) {
