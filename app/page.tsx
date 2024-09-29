@@ -23,7 +23,6 @@ export default function HomePage() {
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const fileName = React.useRef<string | null>(null);
 
-
   //TODO: Load audio file => Create new text in local storage if no local text is found
   // otherwise, load the local text to the editor (setText)
   React.useEffect(() => {
@@ -47,9 +46,11 @@ export default function HomePage() {
 
   React.useEffect(() => {
     if (!fileName.current) return;
-    localStorage.setItem(`${formatFileName(fileName.current)}--subtitles`, JSON.stringify(subtitlesArray));
+    localStorage.setItem(
+      `${formatFileName(fileName.current)}--subtitles`,
+      JSON.stringify(subtitlesArray)
+    );
   }, [subtitlesArray]);
-
 
   React.useEffect(() => {
     if (!audioFile) return;
@@ -62,11 +63,18 @@ export default function HomePage() {
 
   React.useEffect(() => {
     if (!audioUrl) return;
-  
+
     return () => {
       URL.revokeObjectURL(audioUrl);
-    }
+    };
   }, [audioUrl]);
+
+  React.useEffect(() => {
+    const joinedTranscriptArrayValues = transcriptArray.map((line) => {
+      return Object.values(line).join(" --- ");
+    });
+    setText(joinedTranscriptArrayValues.join("\n\n"));
+  }, [transcriptArray]);
 
   function toggleEditor() {
     setIsEditorVisible((prev) => !prev);
@@ -91,7 +99,13 @@ export default function HomePage() {
     if (!fileName.current) return;
     setTranscriptArray(textToTranscriptArray(text));
     setIsEditorVisible(false);
-    setSubtitlesArray(JSON.parse(localStorage.getItem(`${formatFileName(fileName.current)}--subtitles`) || "[]"));
+    setSubtitlesArray(
+      JSON.parse(
+        localStorage.getItem(
+          `${formatFileName(fileName.current)}--subtitles`
+        ) || "[]"
+      )
+    );
   }
 
   function textToTranscriptArray(
@@ -122,11 +136,6 @@ export default function HomePage() {
 
   function editTranscript() {
     setIsEditorVisible(true);
-
-    const joinedTranscriptArrayValues = transcriptArray.map(line => {
-      return Object.values(line).join(' --- ')
-    })
-    setText(joinedTranscriptArrayValues.join('\n\n'))
   }
 
   function addToSubtitles() {
@@ -137,8 +146,13 @@ export default function HomePage() {
   }
 
   function removeFromSubtitles() {
-    setSubtitlesArray((prev) => prev.filter((line, index) => index !== prev.length - 1));
-    setTranscriptArray((prev) => [subtitlesArray[subtitlesArray.length - 1], ...prev]);
+    setSubtitlesArray((prev) =>
+      prev.filter((line, index) => index !== prev.length - 1)
+    );
+    setTranscriptArray((prev) => [
+      subtitlesArray[subtitlesArray.length - 1],
+      ...prev,
+    ]);
   }
 
   return (
@@ -176,7 +190,7 @@ export default function HomePage() {
         <Subtitles
           subtitlesArray={subtitlesArray}
           removeFromSubtitles={removeFromSubtitles}
-         />
+        />
         <AudioPlayer audioUrl={audioUrl} />
         <Transcript
           transcriptArray={transcriptArray}
