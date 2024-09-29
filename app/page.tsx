@@ -80,13 +80,12 @@ export default function HomePage() {
     const lineObjectsArray = text.split("\n\n").map((line) => {
       const parts = line.split("---");
 
-      if (parts.length !== 5) {
+      if (parts.length !== 7) {
         const [text] = parts;
         return { text: text.trim() };
       }
 
-      const [text, ipa, translation, imgUrlandAlt, type] = parts;
-      const [imgUrl, altText, imgCredit] = imgUrlandAlt.split("|");
+      const [text, ipa, translation, imgUrl, altText, imgCredit, type] = parts;
       return {
         text: text.trim(),
         ipa: ipa.trim(),
@@ -104,7 +103,9 @@ export default function HomePage() {
   function editTranscript() {
     setIsEditorVisible(true);
 
-    const joinedTranscriptArrayValues = transcriptArray.map(line => Object.values(line).join(' --- '))
+    const joinedTranscriptArrayValues = transcriptArray.map(line => {
+      return Object.values(line).join(' --- ')
+    })
     setText(joinedTranscriptArrayValues.join('\n\n'))
   }
 
