@@ -13,6 +13,7 @@ export default function HomePage() {
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
   const [text, setText] = React.useState("");
   const [transcriptArray, setTranscriptArray] = React.useState<TranscriptType[] | Partial<TranscriptType>[]>([]);
+  const [subtitlesArray, setSubtitlesArray] = React.useState<TranscriptType[] | Partial<TranscriptType>[]>([]);
 
   const fileName = React.useRef<string | null>(null);
 
