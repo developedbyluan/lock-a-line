@@ -98,6 +98,7 @@ export default function HomePage() {
 
   function addToSubtitles() {
     setTranscriptArray((prev) => prev.filter((line, index) => index !== 0 && line.text !== ""));
+    setSubtitlesArray((prev) => [...prev, transcriptArray[0]]);
   }
 
   return (
