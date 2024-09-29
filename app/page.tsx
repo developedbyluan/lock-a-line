@@ -62,6 +62,7 @@ export default function HomePage() {
   }
 
   function toggleLogTimestamps() {
+    setTranscriptArray(textToTranscriptArray(text));
     setIsEditorVisible(false);
   }
 
@@ -128,7 +129,7 @@ export default function HomePage() {
         <Button>Placeholder</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
-      <Transcript transcriptArray={textToTranscriptArray(text)} />
+      <Transcript transcriptArray={transcriptArray} />
     </div>
   );
 }
