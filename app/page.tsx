@@ -7,6 +7,7 @@ import TextEditor from "@/components/TextEditor";
 import Subtitles from "@/components/Subtitles";
 import { Button } from "@/components/ui/button";
 import Transcript from "@/components/Transcript";
+import AudioPlayer from "@/components/AudioPlayer";
 import { type Transcript as TranscriptType } from "@/types/Transcript";
 
 export default function HomePage() {
@@ -19,15 +20,9 @@ export default function HomePage() {
   const [subtitlesArray, setSubtitlesArray] = React.useState<
     TranscriptType[] | Partial<TranscriptType>[]
   >([]);
-
+  const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const fileName = React.useRef<string | null>(null);
 
-  React.useEffect(() => {
-    if (audioFile) {
-      toggleEditor();
-      fileName.current = audioFile.name;
-    }
-  }, [audioFile]);
 
   //TODO: Load audio file => Create new text in local storage if no local text is found
   // otherwise, load the local text to the editor (setText)
@@ -50,6 +45,23 @@ export default function HomePage() {
     localStorage.setItem(`${formatFileName(fileName.current)}--src`, text);
   }, [text]);
 
+
+  React.useEffect(() => {
+    if (!audioFile) return;
+
+    toggleEditor();
+    fileName.current = audioFile.name;
+
+    setAudioUrl(URL.createObjectURL(audioFile));
+  }, [audioFile]);
+
+  React.useEffect(() => {
+    if (!audioUrl) return;
+  
+    return () => {
+      URL.revokeObjectURL(audioUrl);
+    }
+  }, [audioUrl]);
   function toggleEditor() {
     setIsEditorVisible((prev) => !prev);
   }
@@ -157,6 +169,7 @@ export default function HomePage() {
           subtitlesArray={subtitlesArray}
           removeFromSubtitles={removeFromSubtitles}
          />
+        <AudioPlayer audioUrl={audioUrl} />
         <Transcript
           transcriptArray={transcriptArray}
           addToSubtitles={addToSubtitles}
