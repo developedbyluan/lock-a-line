@@ -36,7 +36,7 @@ export default function HomePage() {
       return;
     }
     setText(localText);
-  }, [audioFile]);
+  }, [audioFile, isEditorVisible]);
 
   //TODO: Save text to local storage every time (the state) text changes
   React.useEffect(() => {
