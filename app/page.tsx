@@ -4,6 +4,7 @@ import React from "react";
 import { UploadAudioFile } from "@/components/UploadAudioFile";
 import { cn } from "@/lib/utils";
 import TextEditor from "@/components/TextEditor";
+import Subtitles from "@/components/Subtitles";
 import { Button } from "@/components/ui/button";
 import Transcript from "@/components/Transcript";
 import { type Transcript as TranscriptType } from "@/types/Transcript";
@@ -12,8 +13,12 @@ export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
   const [text, setText] = React.useState("");
-  const [transcriptArray, setTranscriptArray] = React.useState<TranscriptType[] | Partial<TranscriptType>[]>([]);
-  const [subtitlesArray, setSubtitlesArray] = React.useState<TranscriptType[] | Partial<TranscriptType>[]>([]);
+  const [transcriptArray, setTranscriptArray] = React.useState<
+    TranscriptType[] | Partial<TranscriptType>[]
+  >([]);
+  const [subtitlesArray, setSubtitlesArray] = React.useState<
+    TranscriptType[] | Partial<TranscriptType>[]
+  >([]);
 
   const fileName = React.useRef<string | null>(null);
 
@@ -28,14 +33,16 @@ export default function HomePage() {
   // otherwise, load the local text to the editor (setText)
   React.useEffect(() => {
     if (!fileName.current) return;
-    const localText = localStorage.getItem((`${formatFileName(fileName.current)}--src`))
+    const localText = localStorage.getItem(
+      `${formatFileName(fileName.current)}--src`
+    );
     if (!localText) {
       console.log("No local text found");
       localStorage.setItem(`${formatFileName(fileName.current)}--src`, "");
       return;
-    };
+    }
     setText(localText);
-  }, [audioFile])
+  }, [audioFile]);
 
   //TODO: Save text to local storage every time (the state) text changes
   React.useEffect(() => {
@@ -67,16 +74,18 @@ export default function HomePage() {
     setIsEditorVisible(false);
   }
 
-  function textToTranscriptArray(text: string): TranscriptType[] | Partial<TranscriptType>[] {
+  function textToTranscriptArray(
+    text: string
+  ): TranscriptType[] | Partial<TranscriptType>[] {
     const lineObjectsArray = text.split("\n\n").map((line) => {
       const parts = line.split("---");
 
       if (parts.length !== 5) {
         const [text] = parts;
-        return {text: text.trim()};
+        return { text: text.trim() };
       }
 
-      const [text, ipa, translation, imgUrlandAlt, type ] = parts;
+      const [text, ipa, translation, imgUrlandAlt, type] = parts;
       const [imgUrl, altText, imgCredit] = imgUrlandAlt.split("|");
       return {
         text: text.trim(),
@@ -97,7 +106,9 @@ export default function HomePage() {
   }
 
   function addToSubtitles() {
-    setTranscriptArray((prev) => prev.filter((line, index) => index !== 0 && line.text !== ""));
+    setTranscriptArray((prev) =>
+      prev.filter((line, index) => index !== 0 && line.text !== "")
+    );
     setSubtitlesArray((prev) => [...prev, transcriptArray[0]]);
   }
 
@@ -132,7 +143,13 @@ export default function HomePage() {
         <Button>Placeholder</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
-      <Transcript transcriptArray={transcriptArray} addToSubtitles={addToSubtitles} />
+      <div className="flex flex-col gap-10">
+        <Subtitles subtitlesArray={subtitlesArray} />
+        <Transcript
+          transcriptArray={transcriptArray}
+          addToSubtitles={addToSubtitles}
+        />
+      </div>
     </div>
   );
 }
