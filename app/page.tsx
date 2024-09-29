@@ -12,6 +12,7 @@ export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [isEditorVisible, setIsEditorVisible] = React.useState(false);
   const [text, setText] = React.useState("");
+  const [transcriptArray, setTranscriptArray] = React.useState<TranscriptType[] | Partial<TranscriptType>[]>([]);
 
   const fileName = React.useRef<string | null>(null);
 
@@ -29,7 +30,7 @@ export default function HomePage() {
     const localText = localStorage.getItem((`${formatFileName(fileName.current)}--src`))
     if (!localText) {
       console.log("No local text found");
-      localStorage.setItem(`${formatFileName(fileName.current)}--src`, "1");
+      localStorage.setItem(`${formatFileName(fileName.current)}--src`, "");
       return;
     };
     setText(localText);
@@ -91,6 +92,9 @@ export default function HomePage() {
 
   function editTranscript() {
     setIsEditorVisible(true);
+  }
+
+  function addToSubtitles() {
   }
 
   return (
