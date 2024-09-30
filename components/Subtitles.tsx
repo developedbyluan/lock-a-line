@@ -11,6 +11,7 @@ export default function Subtitles(props: {
     if (Object.keys(line).length !== 7) {
       return (
         <div key={crypto.randomUUID()}>
+          <p>{index + 1}</p>
           <p>{line.text}</p>
           {index === props.subtitlesArray.length - 1 && line.text !== "" ? (
             <Button onClick={props.removeFromSubtitles}>Remove</Button>
@@ -20,6 +21,7 @@ export default function Subtitles(props: {
     }
     return (
       <div key={crypto.randomUUID()}>
+        <p>{index + 1}</p>
         <p>{line.text}</p>
         <p>{line.ipa}</p>
         <p>{line.translation}</p>
