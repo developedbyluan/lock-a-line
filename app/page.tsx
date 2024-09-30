@@ -22,6 +22,7 @@ export default function HomePage() {
   >([]);
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const [isAudioPlaying, setIsAudioPlaying] = React.useState(false);
+  const [playbackRate, setPlaybackRate] = React.useState(1);
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const fileName = React.useRef<string | null>(null);
 
@@ -169,6 +170,13 @@ export default function HomePage() {
     setIsAudioPlaying((prev) => !prev);
   }
 
+  function togglePlaybackRate() {
+    if (!audioRef.current) return;
+    const newPlaybackRate = playbackRate >= 1.5 ? 0.75 : playbackRate + 0.25;
+    audioRef.current.playbackRate = newPlaybackRate;
+    setPlaybackRate(newPlaybackRate);
+  }
+
   return (
     <div className="w-full">
       {!isEditorVisible ? (
@@ -211,6 +219,9 @@ export default function HomePage() {
           isAudioPlaying={isAudioPlaying}
           setIsAudioPlaying={setIsAudioPlaying}
         />
+        <div>
+        <Button onClick={togglePlaybackRate}>Playback Rate: {playbackRate}</Button>
+        </div>
         <Transcript
           transcriptArray={transcriptArray}
           addToSubtitles={addToSubtitles}
