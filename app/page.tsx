@@ -23,6 +23,7 @@ export default function HomePage() {
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const [isAudioPlaying, setIsAudioPlaying] = React.useState(false);
   const [playbackRate, setPlaybackRate] = React.useState(1);
+  const [timestampsArray, setTimestampsArray] = React.useState<number[]>([]);
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const fileName = React.useRef<string | null>(null);
 
@@ -78,6 +79,14 @@ export default function HomePage() {
     });
     setText(joinedTranscriptArrayValues.join("\n\n"));
   }, [transcriptArray]);
+
+  React.useEffect(() => {
+    if (!fileName.current) return;
+    localStorage.setItem(
+      `${formatFileName(fileName.current)}--timestamps`,
+      JSON.stringify(timestampsArray)
+    );
+  }, [timestampsArray]);
 
   function toggleEditor() {
     setIsEditorVisible((prev) => !prev);
@@ -148,6 +157,7 @@ export default function HomePage() {
       prev.filter((line, index) => index !== 0 && line.text !== "")
     );
     setSubtitlesArray((prev) => [...prev, transcriptArray[0]]);
+    addCurrentTimeToTimestampsArray();
   }
 
   function removeFromSubtitles() {
@@ -175,6 +185,12 @@ export default function HomePage() {
     const newPlaybackRate = playbackRate >= 1.5 ? 0.75 : playbackRate + 0.25;
     audioRef.current.playbackRate = newPlaybackRate;
     setPlaybackRate(newPlaybackRate);
+  }
+
+  function addCurrentTimeToTimestampsArray() {
+    if (!audioRef.current) return;
+    const currentTime = audioRef.current.currentTime;
+    setTimestampsArray((prev) => [...prev, currentTime]);
   }
 
   return (
@@ -220,7 +236,7 @@ export default function HomePage() {
           setIsAudioPlaying={setIsAudioPlaying}
         />
         <div>
-        <Button onClick={togglePlaybackRate}>Playback Rate: {playbackRate}</Button>
+          <Button onClick={togglePlaybackRate}>Playback Rate: {playbackRate}</Button>
         </div>
         <Transcript
           transcriptArray={transcriptArray}
