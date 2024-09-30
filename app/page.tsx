@@ -220,7 +220,7 @@ export default function HomePage() {
     audioRef.current.play();
     setTimeout(() => {
       audioRef.current?.pause();
-    }, timeInterval);
+    }, timeInterval / playbackRate);
   }
 
   return (
