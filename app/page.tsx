@@ -127,7 +127,6 @@ export default function HomePage() {
     );
 
     if (!audioRef.current) return;
-    console.log(timestampsArray)
     audioRef.current.currentTime = timestampsArray[timestampsArray.length - 1] || 0;
   }
 

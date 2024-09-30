@@ -1,14 +1,18 @@
 import type { Transcript as TranscriptType } from "@/types/Transcript";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-export default function Subtitles(props: { subtitlesArray: TranscriptType[] | Partial<TranscriptType>[], removeFromSubtitles: () => void }) {
-    const subtitlesElements = props.subtitlesArray.map((line, index) => {
-
+export default function Subtitles(props: {
+  subtitlesArray: TranscriptType[] | Partial<TranscriptType>[];
+  removeFromSubtitles: () => void;
+}) {
+  const subtitlesElements = props.subtitlesArray.map((line, index) => {
     if (Object.keys(line).length !== 7) {
       return (
         <div key={crypto.randomUUID()}>
           <p>{line.text}</p>
-          {index === props.subtitlesArray.length - 1 && line.text !== "" ? <Button onClick={props.removeFromSubtitles}>Remove</Button> : null}
+          {index === props.subtitlesArray.length - 1 && line.text !== "" ? (
+            <Button onClick={props.removeFromSubtitles}>Remove</Button>
+          ) : null}
         </div>
       );
     }
@@ -35,10 +39,16 @@ export default function Subtitles(props: { subtitlesArray: TranscriptType[] | Pa
           <p className="inline-block bg-neutral-200 px-2 py-1 rounded-md text-xs text-neutral-800">
             {line.type}
           </p>
-          {index === props.subtitlesArray.length - 1 ? <Button onClick={props.removeFromSubtitles}>Remove</Button> : null}
+          {index === props.subtitlesArray.length - 1 ? (
+            <Button onClick={props.removeFromSubtitles}>Remove</Button>
+          ) : null}
         </div>
       </div>
     );
   });
-  return <div className="flex flex-col gap-7 bg-neutral-50 p-4">{subtitlesElements}</div>;
+  return (
+    <div className="flex flex-col gap-7 bg-neutral-50 p-4">
+      {subtitlesElements}
+    </div>
+  );
 }

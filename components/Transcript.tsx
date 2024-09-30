@@ -9,12 +9,15 @@ export default function Transcript(props: {
   isAudioPlaying: boolean;
 }) {
   const lineElements = props.transcriptArray.map((line, index) => {
-
     if (Object.keys(line).length !== 7) {
       return (
         <div key={crypto.randomUUID()}>
           <p>{line.text}</p>
-          {index === 0 && line.text !== "" ? <Button onClick={() => props.addToSubtitles()}>{ props.isAudioPlaying ? "Log" : "Play"}</Button> : null}
+          {index === 0 && line.text !== "" ? (
+            <Button onClick={() => props.addToSubtitles()}>
+              {props.isAudioPlaying ? "Log" : "Play"}
+            </Button>
+          ) : null}
         </div>
       );
     }
@@ -41,7 +44,11 @@ export default function Transcript(props: {
           <p className="inline-block bg-neutral-200 px-2 py-1 rounded-md text-xs text-neutral-800">
             {line.type}
           </p>
-          {index === 0 ? <Button onClick={() => props.addToSubtitles()}>{ props.isAudioPlaying ? "Log" : "Play"}</Button> : null}
+          {index === 0 ? (
+            <Button onClick={() => props.addToSubtitles()}>
+              {props.isAudioPlaying ? "Log" : "Play"}
+            </Button>
+          ) : null}
         </div>
       </div>
     );
