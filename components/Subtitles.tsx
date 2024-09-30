@@ -22,6 +22,10 @@ export default function Subtitles(props: {
     return (
       <div key={crypto.randomUUID()}>
         <p>{index + 1}</p>
+        <p>
+          {props.timestampsArray?.[index - 1] || 0} {"-->"}{" "}
+          {props.timestampsArray?.[index]}
+        </p>
         <p>{line.text}</p>
         <p>{line.ipa}</p>
         <p>{line.translation}</p>

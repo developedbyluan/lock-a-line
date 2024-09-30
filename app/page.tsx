@@ -173,8 +173,8 @@ export default function HomePage() {
   }
 
   function removeFromSubtitles() {
-    if (!audioRef.current) return
-    audioRef.current.currentTime = timestampsArray.at(-2) || 0
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = timestampsArray.at(-2) || 0;
 
     setSubtitlesArray((prev) =>
       prev.filter((line, index) => index !== prev.length - 1)
@@ -257,6 +257,7 @@ export default function HomePage() {
       <div className="flex flex-col gap-10">
         <Subtitles
           subtitlesArray={subtitlesArray}
+          timestampsArray={timestampsArray}
           removeFromSubtitles={removeFromSubtitles}
         />
         <AudioPlayer
