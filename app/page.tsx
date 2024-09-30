@@ -34,10 +34,11 @@ export default function HomePage() {
 
     setTimestampsArray(
       JSON.parse(
-        localStorage.getItem(`${formatFileName(fileName.current)}--timestamps`) ||
-          "[]"
+        localStorage.getItem(
+          `${formatFileName(fileName.current)}--timestamps`
+        ) || "[]"
       )
-    );  
+    );
     const localText = localStorage.getItem(
       `${formatFileName(fileName.current)}--src`
     );
@@ -127,7 +128,8 @@ export default function HomePage() {
     );
 
     if (!audioRef.current) return;
-    audioRef.current.currentTime = timestampsArray[timestampsArray.length - 1] || 0;
+    audioRef.current.currentTime =
+      timestampsArray[timestampsArray.length - 1] || 0;
   }
 
   function textToTranscriptArray(
@@ -203,6 +205,18 @@ export default function HomePage() {
     setTimestampsArray((prev) => [...prev, currentTime]);
   }
 
+  function replayAudio() {
+    if (!audioRef.current) return
+    const startTime = timestampsArray.at(-2) || 0
+    const endTime = timestampsArray.at(-1) || 0
+    const timeInterval = (endTime - startTime) * 1000
+    audioRef.current.currentTime = startTime
+    audioRef.current.play()
+    setTimeout(() => {
+      audioRef.current?.pause()
+    }, timeInterval)
+  }
+
   return (
     <div className="w-full">
       {!isEditorVisible ? (
@@ -246,7 +260,10 @@ export default function HomePage() {
           setIsAudioPlaying={setIsAudioPlaying}
         />
         <div>
-          <Button onClick={togglePlaybackRate}>Playback Rate: {playbackRate}</Button>
+          <Button onClick={replayAudio}>Replay</Button>
+          <Button onClick={togglePlaybackRate}>
+            Playback Rate: {playbackRate}
+          </Button>
         </div>
         <Transcript
           transcriptArray={transcriptArray}
