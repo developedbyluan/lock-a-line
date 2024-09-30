@@ -31,6 +31,13 @@ export default function HomePage() {
   // otherwise, load the local text to the editor (setText)
   React.useEffect(() => {
     if (!fileName.current) return;
+
+    setTimestampsArray(
+      JSON.parse(
+        localStorage.getItem(`${formatFileName(fileName.current)}--timestamps`) ||
+          "[]"
+      )
+    );  
     const localText = localStorage.getItem(
       `${formatFileName(fileName.current)}--src`
     );
@@ -118,6 +125,10 @@ export default function HomePage() {
         ) || "[]"
       )
     );
+
+    if (!audioRef.current) return;
+    console.log(timestampsArray)
+    audioRef.current.currentTime = timestampsArray[timestampsArray.length - 1] || 0;
   }
 
   function textToTranscriptArray(
