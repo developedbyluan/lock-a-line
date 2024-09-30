@@ -1,8 +1,10 @@
 import type { Transcript as TranscriptType } from "@/types/Transcript";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+
 export default function Subtitles(props: {
   subtitlesArray: TranscriptType[] | Partial<TranscriptType>[];
+  timestampsArray: number[];
   removeFromSubtitles: () => void;
 }) {
   const subtitlesElements = props.subtitlesArray.map((line, index) => {
