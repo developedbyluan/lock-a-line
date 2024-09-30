@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import Transcript from "@/components/Transcript";
 import AudioPlayer from "@/components/AudioPlayer";
 import { type Transcript as TranscriptType } from "@/types/Transcript";
+import { toast } from "@/hooks/use-toast";
 
 export default function HomePage() {
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
@@ -223,6 +224,15 @@ export default function HomePage() {
     }, timeInterval / playbackRate);
   }
 
+  function backToPreviousPoint() {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = timestampsArray.at(-1) || 0;
+    toast({
+      title: `Go back to ${timestampsArray.at(-1)}`,
+      duration: 1000,
+    });
+  }
+
   return (
     <div className="w-full">
       {!isEditorVisible ? (
@@ -281,15 +291,12 @@ export default function HomePage() {
             <Button
               variant={"secondary"}
               disabled={isAudioPlaying}
-              onClick={() => {
-                if (!audioRef.current) return;
-                audioRef.current.currentTime = timestampsArray.at(-1) || 0;
-              }}
+              onClick={backToPreviousPoint}
             >
               Back
             </Button>
             <Button
-            disabled={!isAudioPlaying}
+              disabled={!isAudioPlaying}
               variant={"secondary"}
               onClick={() => audioRef.current?.pause()}
             >
