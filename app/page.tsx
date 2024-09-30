@@ -258,7 +258,6 @@ export default function HomePage() {
         <Subtitles
           subtitlesArray={subtitlesArray}
           timestampsArray={timestampsArray}
-          removeFromSubtitles={removeFromSubtitles}
         />
         <AudioPlayer
           ref={audioRef}
@@ -266,23 +265,29 @@ export default function HomePage() {
           isAudioPlaying={isAudioPlaying}
           setIsAudioPlaying={setIsAudioPlaying}
         />
-        <div>
-
+        <div className="flex flex-col gap-4">
+          <div>
             <Button onClick={removeFromSubtitles}>Remove</Button>
-          <Button onClick={replayAudio}>Replay</Button>
-          <Button onClick={togglePlaybackRate}>
-            Playback Rate: {playbackRate}
-          </Button>
-          <Button onClick={() => audioRef.current?.pause()}>Pause</Button>
-          <Button
-          disabled={isAudioPlaying}
-            onClick={() => {
-              if (!audioRef.current) return;
-              audioRef.current.currentTime = timestampsArray.at(-1) || 0;
-            }}
-          >
-            Back
-          </Button>
+            <Button onClick={replayAudio}>Replay</Button>
+          </div>
+          <div>
+            <Button onClick={togglePlaybackRate}>
+              Playback Rate: {playbackRate}
+            </Button>
+            <Button onClick={() => audioRef.current?.pause()}>Pause</Button>
+            <Button
+              disabled={isAudioPlaying}
+              onClick={() => {
+                if (!audioRef.current) return;
+                audioRef.current.currentTime = timestampsArray.at(-1) || 0;
+              }}
+            >
+              Back
+            </Button>
+            <Button onClick={() => addToSubtitles()}>
+              {isAudioPlaying ? "Log" : "Play"}
+            </Button>
+          </div>
         </div>
         <Transcript
           transcriptArray={transcriptArray}
