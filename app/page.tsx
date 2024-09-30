@@ -173,8 +173,14 @@ export default function HomePage() {
   }
 
   function removeFromSubtitles() {
+    if (!audioRef.current) return
+    audioRef.current.currentTime = timestampsArray.at(-2) || 0
+
     setSubtitlesArray((prev) =>
       prev.filter((line, index) => index !== prev.length - 1)
+    );
+    setTimestampsArray((prev) =>
+      prev.filter((prev, index) => index !== timestampsArray.length - 1)
     );
     setTranscriptArray((prev) => [
       subtitlesArray[subtitlesArray.length - 1],
@@ -206,15 +212,15 @@ export default function HomePage() {
   }
 
   function replayAudio() {
-    if (!audioRef.current) return
-    const startTime = timestampsArray.at(-2) || 0
-    const endTime = timestampsArray.at(-1) || 0
-    const timeInterval = (endTime - startTime) * 1000
-    audioRef.current.currentTime = startTime
-    audioRef.current.play()
+    if (!audioRef.current) return;
+    const startTime = timestampsArray.at(-2) || 0;
+    const endTime = timestampsArray.at(-1) || 0;
+    const timeInterval = (endTime - startTime) * 1000;
+    audioRef.current.currentTime = startTime;
+    audioRef.current.play();
     setTimeout(() => {
-      audioRef.current?.pause()
-    }, timeInterval)
+      audioRef.current?.pause();
+    }, timeInterval);
   }
 
   return (
