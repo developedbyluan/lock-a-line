@@ -12,7 +12,6 @@ function AudioPlayer(
     <div>
       <audio
         src={props.audioUrl!}
-        controls
         ref={ref}
         onPlay={() => props.setIsAudioPlaying(true)}
         onPause={() => props.setIsAudioPlaying(false)}

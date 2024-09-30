@@ -254,7 +254,7 @@ export default function HomePage() {
         <Button>Placeholder</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-4">
         <Subtitles
           subtitlesArray={subtitlesArray}
           timestampsArray={timestampsArray}
