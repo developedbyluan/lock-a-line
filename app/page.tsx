@@ -272,7 +272,7 @@ export default function HomePage() {
           </div>
           <div>
             <Button onClick={togglePlaybackRate}>
-              Playback Rate: {playbackRate}
+             x{playbackRate}
             </Button>
             <Button onClick={() => audioRef.current?.pause()}>Pause</Button>
             <Button
