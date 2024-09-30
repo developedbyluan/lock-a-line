@@ -267,12 +267,15 @@ export default function HomePage() {
           setIsAudioPlaying={setIsAudioPlaying}
         />
         <div>
+
+            <Button onClick={removeFromSubtitles}>Remove</Button>
           <Button onClick={replayAudio}>Replay</Button>
           <Button onClick={togglePlaybackRate}>
             Playback Rate: {playbackRate}
           </Button>
           <Button onClick={() => audioRef.current?.pause()}>Pause</Button>
           <Button
+          disabled={isAudioPlaying}
             onClick={() => {
               if (!audioRef.current) return;
               audioRef.current.currentTime = timestampsArray.at(-1) || 0;
