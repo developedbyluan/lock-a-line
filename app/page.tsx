@@ -266,16 +266,20 @@ export default function HomePage() {
           setIsAudioPlaying={setIsAudioPlaying}
         />
         <div className="flex flex-col gap-4">
-          <div>
-            <Button onClick={removeFromSubtitles}>Remove</Button>
-            <Button onClick={replayAudio}>Replay</Button>
-          </div>
-          <div>
-            <Button onClick={togglePlaybackRate}>
-             x{playbackRate}
+          <div className="flex gap-4">
+            <Button variant={"destructive"} onClick={removeFromSubtitles}>
+              Remove
             </Button>
-            <Button onClick={() => audioRef.current?.pause()}>Pause</Button>
+            <Button variant={"outline"} onClick={replayAudio}>
+              Replay
+            </Button>
+          </div>
+          <div className="flex gap-4">
+            <Button variant={"outline"} onClick={togglePlaybackRate}>
+              x{playbackRate}
+            </Button>
             <Button
+              variant={"secondary"}
               disabled={isAudioPlaying}
               onClick={() => {
                 if (!audioRef.current) return;
@@ -283,6 +287,12 @@ export default function HomePage() {
               }}
             >
               Back
+            </Button>
+            <Button
+              variant={"secondary"}
+              onClick={() => audioRef.current?.pause()}
+            >
+              Pause
             </Button>
             <Button onClick={() => addToSubtitles()}>
               {isAudioPlaying ? "Log" : "Play"}
