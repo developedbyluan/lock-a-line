@@ -271,6 +271,15 @@ export default function HomePage() {
           <Button onClick={togglePlaybackRate}>
             Playback Rate: {playbackRate}
           </Button>
+          <Button onClick={() => audioRef.current?.pause()}>Pause</Button>
+          <Button
+            onClick={() => {
+              if (!audioRef.current) return;
+              audioRef.current.currentTime = timestampsArray.at(-1) || 0;
+            }}
+          >
+            Back
+          </Button>
         </div>
         <Transcript
           transcriptArray={transcriptArray}
