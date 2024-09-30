@@ -265,7 +265,7 @@ export default function HomePage() {
           isAudioPlaying={isAudioPlaying}
           setIsAudioPlaying={setIsAudioPlaying}
         />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-4">
           <div className="flex gap-4">
             <Button variant={"destructive"} onClick={removeFromSubtitles}>
               Remove
@@ -289,6 +289,7 @@ export default function HomePage() {
               Back
             </Button>
             <Button
+            disabled={!isAudioPlaying}
               variant={"secondary"}
               onClick={() => audioRef.current?.pause()}
             >
