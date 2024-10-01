@@ -25,6 +25,7 @@ export default function HomePage() {
   const [isAudioPlaying, setIsAudioPlaying] = React.useState(false);
   const [playbackRate, setPlaybackRate] = React.useState(1);
   const [timestampsArray, setTimestampsArray] = React.useState<number[]>([]);
+  const [isReplaying, setIsReplaying] = React.useState(false)
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const fileName = React.useRef<string | null>(null);
 
@@ -214,6 +215,7 @@ export default function HomePage() {
 
   function replayAudio() {
     if (!audioRef.current) return;
+    setIsReplaying(true)
     const startTime = timestampsArray.at(-2) || 0;
     const endTime = timestampsArray.at(-1) || 0;
     const timeInterval = (endTime - startTime) * 1000;
@@ -221,6 +223,7 @@ export default function HomePage() {
     audioRef.current.play();
     setTimeout(() => {
       audioRef.current?.pause();
+      setIsReplaying(false)
     }, timeInterval / playbackRate);
   }
 
@@ -339,13 +342,13 @@ export default function HomePage() {
                 Back
               </Button>
               <Button
-                disabled={!isAudioPlaying}
+                disabled={!isAudioPlaying || isReplaying}
                 variant={"secondary"}
                 onClick={() => audioRef.current?.pause()}
               >
                 Pause
               </Button>
-              <Button onClick={() => addToSubtitles()}>
+              <Button onClick={() => addToSubtitles()} disabled={isReplaying}>
                 {isAudioPlaying ? "Log" : "Play"}
               </Button>
             </div>
