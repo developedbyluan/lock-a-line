@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster"
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Lock a Line",
-  description: "Generate subtitle for your mini stories",
+  title: "Log a Line - Generate Subtitles Manually",
+  description: "Generate subtitles for your mini stories",
   keywords: ["subtitle", "story", "generate"],
 };
 
@@ -17,9 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header>
-          <h1>Lock a Line</h1>
-        </header>
         <main>{children}</main>
         <Toaster />
       </body>
