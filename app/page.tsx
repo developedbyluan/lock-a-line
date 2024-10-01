@@ -303,8 +303,8 @@ export default function HomePage() {
       {audioUrl && 
       <div>
         <div className="fixed opacity-80 h-1/2 top-1/2 -translate-y-1/2 p-4 right-4 flex flex-col justify-between">
-          <Button onClick={exportSubtitles}>Export Subtitles</Button>
-          <Button onClick={editTranscript}>Edit transcript</Button>
+          <Button onClick={exportSubtitles} disabled={isAudioPlaying}>Export Subtitles</Button>
+          <Button onClick={editTranscript} disabled={isAudioPlaying}>Edit transcript</Button>
         </div>
 
         <div className="flex flex-col">
@@ -320,15 +320,15 @@ export default function HomePage() {
           />
           <div className="flex flex-col gap-8 pl-8 bg-neutral-50">
             <div className="flex gap-4 pb-4">
-              <Button onClick={removeFromSubtitles}>Remove</Button>
-              <Button variant={"outline"} onClick={replayAudio}>
+              <Button onClick={removeFromSubtitles} disabled={isAudioPlaying}>Remove</Button>
+              <Button variant={"outline"} onClick={replayAudio} disabled={isAudioPlaying}>
                 Replay
               </Button>
             </div>
           </div>
           <div>
             <div className="flex gap-4 bg-white pl-8 pt-8">
-              <Button variant={"outline"} onClick={togglePlaybackRate}>
+              <Button variant={"outline"} onClick={togglePlaybackRate} disabled={isAudioPlaying}>
                 x{playbackRate}
               </Button>
               <Button
