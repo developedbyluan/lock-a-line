@@ -263,6 +263,9 @@ export default function HomePage() {
 
   return (
     <div className="w-full">
+      <Button className={cn("absolute right-4 top-4", audioUrl ? "block" : "hidden")} variant={"destructive"} onClick={() => window.location.reload()}>
+        Reset All
+      </Button>
       {!isEditorVisible ? (
         <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
       ) : null}
