@@ -1,19 +1,19 @@
 import type { Transcript as TranscriptType } from "@/types/Transcript";
-import Image from "next/image";
 import React from "react";
+import CustomizedImage from "./CustomizedImage";
 
 export default function Subtitles(props: {
   subtitlesArray: TranscriptType[] | Partial<TranscriptType>[];
   timestampsArray: number[];
 }) {
-  const lastElementRef = React.useRef<HTMLElement | null>(null)
+  const lastElementRef = React.useRef<HTMLElement | null>(null);
 
   const subtitlesElements = props.subtitlesArray.map((line, index) => {
     const callbackRef = (e: HTMLDivElement) => {
       if (index === props.subtitlesArray.length - 1) {
-        lastElementRef.current = e 
+        lastElementRef.current = e;
       }
-    }
+    };
     if (Object.keys(line).length !== 7) {
       return (
         <div key={crypto.randomUUID()} ref={callbackRef}>
@@ -33,18 +33,11 @@ export default function Subtitles(props: {
         <p>{line.ipa}</p>
         <p>{line.translation}</p>
         {!(line.imgUrl === "no-imgUrl") && (
-          <div>
-            <Image
-              src={`/images/${line.imgUrl}`}
-              alt={line.altText || ""}
-              width={0}
-              height={0}
-              className="w-1/4 h-auto"
-            />
-            <p className="text-xs text-muted-foreground mt-1">
-              <span className="font-bold">Credit: </span> {line.imgCredit}
-            </p>
-          </div>
+          <CustomizedImage
+            imgUrl={line.imgUrl}
+            altText={line.altText}
+            imgCredit={line.imgCredit}
+          />
         )}
         <div className="w-2/3 flex justify-between items-center mt-2">
           <p className="inline-block bg-neutral-200 px-2 py-1 rounded-md text-xs text-neutral-800">
@@ -56,13 +49,11 @@ export default function Subtitles(props: {
   });
 
   React.useEffect(() => {
-    lastElementRef.current?.scrollIntoView(
-      {
-        block: "start",
-        behavior: "smooth"
-      }
-    )
-  }, [props.subtitlesArray])
+    lastElementRef.current?.scrollIntoView({
+      block: "start",
+      behavior: "smooth",
+    });
+  }, [props.subtitlesArray]);
   return (
     <div className="flex flex-col gap-7 bg-neutral-50 p-4">
       {subtitlesElements}

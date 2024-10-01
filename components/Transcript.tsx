@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { type Transcript as TranscriptType } from "@/types/Transcript";
+import CustomizedImage from "./CustomizedImage";
 
 export default function Transcript(props: {
   transcriptArray: TranscriptType[] | Partial<TranscriptType>[];
@@ -20,18 +20,11 @@ export default function Transcript(props: {
         <p>{line.ipa}</p>
         <p>{line.translation}</p>
         {!(line.imgUrl === "no-imgUrl") && (
-          <div>
-            <Image
-              src={`/images/${line.imgUrl}`}
-              alt={line.altText || ""}
-              width={0}
-              height={0}
-              className="w-1/4 h-auto"
-            />
-            <p className="text-xs text-muted-foreground mt-1">
-              <span className="font-bold">Credit: </span> {line.imgCredit}
-            </p>
-          </div>
+          <CustomizedImage
+            imgUrl={line.imgUrl}
+            altText={line.altText}
+            imgCredit={line.imgCredit}
+          />
         )}
         <div className="w-2/3 flex justify-between items-center mt-2">
           <p className="inline-block bg-neutral-200 px-2 py-1 rounded-md text-xs text-neutral-800">

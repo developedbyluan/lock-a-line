@@ -308,7 +308,7 @@ export default function HomePage() {
         />
         <div className="flex flex-col gap-4 p-4">
           <div className="flex gap-4">
-            <Button variant={"destructive"} onClick={removeFromSubtitles}>
+            <Button onClick={removeFromSubtitles}>
               Remove
             </Button>
             <Button variant={"outline"} onClick={replayAudio}>
