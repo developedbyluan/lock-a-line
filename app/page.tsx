@@ -233,6 +233,34 @@ export default function HomePage() {
     });
   }
 
+  function exportSubtitles() {
+    if (!fileName.current) return;
+    const subtitles = [...subtitlesArray];
+    const timestamps = [...timestampsArray];
+
+    if (subtitles.length !== timestamps.length) return;
+
+    const obj = subtitles.map((line, index) => {
+      return {
+        ...line,
+        startTime: timestamps[index - 1] || 0,
+        endTime: timestamps[index],
+      };
+    });
+
+    const json = JSON.stringify(obj);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = formatFileName(fileName.current) + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="w-full">
       {!isEditorVisible ? (
@@ -260,8 +288,8 @@ export default function HomePage() {
           Transcription for {fileName.current || "Untitled"}
         </p>
       </div>
-      <div className="fixed bg-red-200/50 h-1/2 top-1/2 -translate-y-1/2 p-4 right-4 flex flex-col justify-between">
-        <Button>Placeholder</Button>
+      <div className="fixed opacity-80 h-1/2 top-1/2 -translate-y-1/2 p-4 right-4 flex flex-col justify-between">
+        <Button onClick={exportSubtitles}>Export Subtitles</Button>
         <Button onClick={editTranscript}>Edit transcript</Button>
       </div>
       <div className="flex flex-col gap-4">

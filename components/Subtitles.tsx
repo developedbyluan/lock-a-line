@@ -13,7 +13,6 @@ export default function Subtitles(props: {
       if (index === props.subtitlesArray.length - 1) {
         lastElementRef.current = e 
       }
-      console.log(lastElementRef.current)
     }
     if (Object.keys(line).length !== 7) {
       return (
