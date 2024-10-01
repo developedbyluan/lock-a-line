@@ -277,7 +277,9 @@ export default function HomePage() {
       )}
 
       {!isEditorVisible && !audioUrl && (
-        <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
+        <div className="w-full h-screen flex items-center justify-center">
+          <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
+        </div>
       ) }
 
       <div
