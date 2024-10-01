@@ -1,5 +1,6 @@
 import { type Transcript as TranscriptType } from "@/types/Transcript";
 import CustomizedImage from "./CustomizedImage";
+import SentenceWithIPAOnTop from "./SentenceWithIPAOnTop";
 
 export default function Transcript(props: {
   transcriptArray: TranscriptType[] | Partial<TranscriptType>[];
@@ -16,9 +17,8 @@ export default function Transcript(props: {
     }
     return (
       <div key={crypto.randomUUID()}>
-        <p>{line.text}</p>
-        <p>{line.ipa}</p>
-        <p>{line.translation}</p>
+        <SentenceWithIPAOnTop subtitle={line} />
+        <p className="my-4">{line.translation}</p>
         {!(line.imgUrl === "no-imgUrl") && (
           <CustomizedImage
             imgUrl={line.imgUrl}
