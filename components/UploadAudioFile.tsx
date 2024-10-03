@@ -16,7 +16,7 @@ export function UploadAudioFile({
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (!file.type.includes("audio")) {
+    if (!file.name.endsWith(".mp3")) {
       toast({
         title: "Invalid file type",
         description: "Please upload a valid audio file",
@@ -34,7 +34,7 @@ export function UploadAudioFile({
     <div className="flex flex-col items-center justify-center gap-2">
       <input
         type="file"
-        accept="audio/*"
+        accept=".mp3"
         onChange={handleChange}
         ref={inputRef}
         className="hidden"
