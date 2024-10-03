@@ -231,7 +231,7 @@ export default function HomePage() {
     if (!audioRef.current) return;
     audioRef.current.currentTime = timestampsArray.at(-1) || 0;
     toast({
-      title: `Go back to ${timestampsArray.at(-1)}`,
+      title: `Go back to ${timestampsArray.at(-1) || 0}`,
       duration: 1000,
     });
   }
