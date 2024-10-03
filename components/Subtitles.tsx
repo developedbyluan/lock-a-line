@@ -19,6 +19,10 @@ export default function Subtitles(props: {
       return (
         <div key={crypto.randomUUID()} ref={callbackRef}>
           <p>{index + 1}</p>
+          <p>
+            {props.timestampsArray?.[index - 1] || 0} {"-->"}{" "}
+            {props.timestampsArray?.[index]}
+          </p>
           <p>{line.text}</p>
         </div>
       );
