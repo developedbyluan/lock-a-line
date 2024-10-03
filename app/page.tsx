@@ -25,7 +25,7 @@ export default function HomePage() {
   const [isAudioPlaying, setIsAudioPlaying] = React.useState(false);
   const [playbackRate, setPlaybackRate] = React.useState(1);
   const [timestampsArray, setTimestampsArray] = React.useState<number[]>([]);
-  const [isReplaying, setIsReplaying] = React.useState(false)
+  const [isReplaying, setIsReplaying] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const fileName = React.useRef<string | null>(null);
 
@@ -215,7 +215,7 @@ export default function HomePage() {
 
   function replayAudio() {
     if (!audioRef.current) return;
-    setIsReplaying(true)
+    setIsReplaying(true);
     const startTime = timestampsArray.at(-2) || 0;
     const endTime = timestampsArray.at(-1) || 0;
     const timeInterval = (endTime - startTime) * 1000;
@@ -223,7 +223,7 @@ export default function HomePage() {
     audioRef.current.play();
     setTimeout(() => {
       audioRef.current?.pause();
-      setIsReplaying(false)
+      setIsReplaying(false);
     }, timeInterval / playbackRate);
   }
 
@@ -272,7 +272,7 @@ export default function HomePage() {
           variant={"destructive"}
           onClick={() => window.location.reload()}
         >
-          Reset All
+          New Project
         </Button>
       )}
 
@@ -280,8 +280,8 @@ export default function HomePage() {
         <div className="w-full h-screen flex items-center justify-center">
           <UploadAudioFile setAudioFile={setAudioFile} audioFile={audioFile} />
         </div>
-      ) }
-
+      )}
+      {/* text-editor */}
       <div
         id="text-editor"
         className={cn(
@@ -297,71 +297,104 @@ export default function HomePage() {
           >
             Format Text
           </Button>
-          <Button onClick={toggleLogTimestamps}>Log Timestamps</Button>
+          <Button onClick={toggleLogTimestamps} disabled={text.length === 0}>
+            Log Timestamps
+          </Button>
         </div>
         <TextEditor text={text} setText={setText} toggleEditor={toggleEditor} />
         <p className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-xs text-muted-foreground">
           Transcription for {fileName.current || "Untitled"}
         </p>
       </div>
+      {/* ./ text-editor */}
 
-      {audioUrl && 
-      <div>
-        <div className="fixed opacity-80 h-1/2 top-1/2 -translate-y-1/2 p-4 right-4 flex flex-col justify-between">
-          <Button onClick={exportSubtitles} disabled={isAudioPlaying}>Export Subtitles</Button>
-          <Button onClick={editTranscript} disabled={isAudioPlaying}>Edit transcript</Button>
-        </div>
+      {audioUrl && (
+        <div>
+          <div className="fixed opacity-80 h-1/2 top-1/2 -translate-y-1/2 right-4 flex flex-col justify-between">
+            {subtitlesArray.length > 0 && (
+              <Button onClick={exportSubtitles} disabled={isAudioPlaying}>
+                Export Subtitles
+              </Button>
+            )}
+            <Button onClick={editTranscript} disabled={isAudioPlaying}>
+              Edit transcript
+            </Button>
+          </div>
 
-        <div className="flex flex-col">
-          <Subtitles
-            subtitlesArray={subtitlesArray}
-            timestampsArray={timestampsArray}
-          />
-          <AudioPlayer
-            ref={audioRef}
-            audioUrl={audioUrl}
-            isAudioPlaying={isAudioPlaying}
-            setIsAudioPlaying={setIsAudioPlaying}
-          />
-          <div className="flex flex-col gap-8 pl-8 bg-neutral-50">
-            <div className="flex gap-4 pb-4">
-              <Button onClick={removeFromSubtitles} disabled={isAudioPlaying}>Remove</Button>
-              <Button variant={"outline"} onClick={replayAudio} disabled={isAudioPlaying}>
-                Replay
-              </Button>
-            </div>
+          <div className="flex flex-col">
+            <Subtitles
+              subtitlesArray={subtitlesArray}
+              timestampsArray={timestampsArray}
+            />
+            <AudioPlayer
+              ref={audioRef}
+              audioUrl={audioUrl}
+              isAudioPlaying={isAudioPlaying}
+              setIsAudioPlaying={setIsAudioPlaying}
+            />
+
+            {subtitlesArray.length > 0 && (
+              <div className="flex flex-col gap-8 pl-8 bg-neutral-50">
+                <div className="flex gap-4 pb-4">
+                  <Button
+                    onClick={removeFromSubtitles}
+                    disabled={isAudioPlaying}
+                  >
+                    Remove
+                  </Button>
+                  <Button
+                    variant={"outline"}
+                    onClick={replayAudio}
+                    disabled={isAudioPlaying}
+                  >
+                    Replay
+                  </Button>
+                </div>
+              </div>
+            )}
+            {text.length > 0 && (
+              <>
+                <div>
+                  <div className="flex gap-4 bg-white pl-8 pt-8">
+                    <Button
+                      variant={"outline"}
+                      onClick={togglePlaybackRate}
+                      disabled={isAudioPlaying}
+                    >
+                      x{playbackRate}
+                    </Button>
+                    <Button
+                      variant={"secondary"}
+                      disabled={isAudioPlaying}
+                      onClick={backToPreviousPoint}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      disabled={!isAudioPlaying || isReplaying}
+                      variant={"secondary"}
+                      onClick={() => audioRef.current?.pause()}
+                    >
+                      Pause
+                    </Button>
+                    <Button
+                      onClick={() => addToSubtitles()}
+                      disabled={isReplaying}
+                    >
+                      {isAudioPlaying ? "Log" : "Play"}
+                    </Button>
+                  </div>
+                </div>
+                <Transcript
+                  transcriptArray={transcriptArray}
+                  addToSubtitles={addToSubtitles}
+                  isAudioPlaying={isAudioPlaying}
+                />
+              </>
+            )}
           </div>
-          <div>
-            <div className="flex gap-4 bg-white pl-8 pt-8">
-              <Button variant={"outline"} onClick={togglePlaybackRate} disabled={isAudioPlaying}>
-                x{playbackRate}
-              </Button>
-              <Button
-                variant={"secondary"}
-                disabled={isAudioPlaying}
-                onClick={backToPreviousPoint}
-              >
-                Back
-              </Button>
-              <Button
-                disabled={!isAudioPlaying || isReplaying}
-                variant={"secondary"}
-                onClick={() => audioRef.current?.pause()}
-              >
-                Pause
-              </Button>
-              <Button onClick={() => addToSubtitles()} disabled={isReplaying}>
-                {isAudioPlaying ? "Log" : "Play"}
-              </Button>
-            </div>
-          </div>
-          <Transcript
-            transcriptArray={transcriptArray}
-            addToSubtitles={addToSubtitles}
-            isAudioPlaying={isAudioPlaying}
-          />
         </div>
-      </div> }
+      )}
     </div>
   );
 }
